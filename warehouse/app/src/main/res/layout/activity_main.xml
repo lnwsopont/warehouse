@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.muicsenior.warehouse.MainActivity">
+    android:orientation="vertical"
+    tools:context="com.muicsenior.warehouse.activities.MainActivity">
 
     <TextView
         android:layout_width="wrap_content"
@@ -15,4 +16,74 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-</android.support.constraint.ConstraintLayout>
+    <!---->
+
+    <RelativeLayout
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <View
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="#ff0000"
+            android:layout_toRightOf="@+id/box_green"
+            android:layout_alignTop="@id/box_green"
+            />
+
+        <View
+            android:id="@id/box_green"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="#00ff00"
+            android:layout_marginTop="100dp"
+            android:layout_marginLeft="200dp"
+            />
+
+    </RelativeLayout>
+
+    <FrameLayout
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#ff0000"
+            />
+
+    </FrameLayout>
+
+    <ScrollView
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="#ff0000"
+                />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="#00ff00"
+                />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="#0000ff"
+                />
+        </LinearLayout>
+    </ScrollView>
+
+    <ListView
+        android:id="@+id/list1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></ListView>
+
+</LinearLayout>
