@@ -1,5 +1,6 @@
 package com.muicsenior.warehouse.activities;
 
+import android.content.Intent;
 import android.graphics.PointF;
 import android.hardware.Camera;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +9,7 @@ import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.muicsenior.warehouse.R;
 
@@ -31,9 +33,10 @@ public class CamActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cam);
 
-        txt = (TextView) findViewById(R.id.txt);
+        Intent intent = getIntent();
+        int id = intent.getIntExtra("id", 100);
 
-        txt.setText("test");
+        txt = (TextView) findViewById(R.id.txt);
 
         surfaceView = (SurfaceView) findViewById(R.id.camera_view);
         /*surfaceHolder = surfaceView.getHolder();
@@ -89,7 +92,7 @@ public class CamActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        txt.setText("QREader Value : " + data);
+                        onReceiveString(data);
                     }
                 });
             }
@@ -100,6 +103,15 @@ public class CamActivity extends AppCompatActivity {
                 .build();
 
 
+    }
+
+    private void onReceiveString(String msg){
+        if(msg.startsWith("wh::")) {
+            Intent intent = new Intent();
+            intent.putExtra("msg", msg);
+            setResult(RESULT_OK, intent);
+            finish();
+        }
     }
 
     @Override

@@ -59,7 +59,9 @@ public class MainActivity extends AppCompatActivity {
             );
         }
 
-        startActivity(new Intent(MainActivity.this, CamActivity.class));
+        Intent intent = new Intent(MainActivity.this, CamActivity.class);
+        intent.putExtra("id", 123);
+        startActivityForResult(intent, 666);
 
         if(true)return;
 
@@ -79,6 +81,14 @@ public class MainActivity extends AppCompatActivity {
         list1 = (ListView) findViewById(R.id.list1);
 
         custom();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode == RESULT_OK && requestCode == 666){
+            String msg = data.getStringExtra("msg");
+            Toast.makeText(this, "msg: " + msg, Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void basicConnect() {
