@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.tamemo.simplehttp.SimpleHttp;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
