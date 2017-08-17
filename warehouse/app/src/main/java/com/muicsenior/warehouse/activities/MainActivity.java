@@ -1,8 +1,12 @@
 package com.muicsenior.warehouse.activities;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -22,6 +26,8 @@ import com.muicsenior.warehouse.libraries.callbacker.CallbackerJSON;
 import com.muicsenior.warehouse.libraries.callbacker.CallbackerString;
 import com.muicsenior.warehouse.models.BaseCallback;
 import com.muicsenior.warehouse.models.TestApi;
+import com.tamemo.simplehttp.OnResponseJson;
+import com.tamemo.simplehttp.SimpleHttp;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +40,28 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        SimpleHttp.GET("http://api.nainee.com/test", new OnResponseJson() {
+            @Override
+            public void onSuccess(com.tamemo.dao.JSON res) {
+                Toast.makeText(MainActivity.this, res.toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        int permission = ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
+
+        if (permission != PackageManager.PERMISSION_GRANTED) {
+            // We don't have permission so prompt the user
+            ActivityCompat.requestPermissions(
+                    this,
+                    new String[]{Manifest.permission.CAMERA},
+                    1
+            );
+        }
+
+        startActivity(new Intent(MainActivity.this, CamActivity.class));
+
+        if(true)return;
 
         TestApi api = new TestApi();
         api.test(2, new BaseCallback<String>() {

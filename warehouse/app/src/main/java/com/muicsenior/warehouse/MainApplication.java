@@ -2,7 +2,7 @@ package com.muicsenior.warehouse;
 
 import android.app.Application;
 
-import com.muicsenior.warehouse.libraries.Contextor;
+import com.tamemo.Contextor;
 
 /**
  * Created by Ta on 2017-08-10.
@@ -14,5 +14,6 @@ public class MainApplication extends Application {
     public void onCreate() {
         super.onCreate();
         Contextor.getInstance().init(getApplicationContext());
+        com.muicsenior.warehouse.libraries.Contextor.getInstance().init(getApplicationContext());
     }
 }
