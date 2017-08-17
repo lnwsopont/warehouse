@@ -1,19 +1,20 @@
 package com.muicsenior.warehouse.models;
 
-import com.muicsenior.warehouse.libraries.HttpConnector;
+import com.tamemo.simplehttp.Session;
+import com.tamemo.simplehttp.SimpleHttp;
 
 /**
  * Created by Ta on 2017-08-10.
  */
 
 public class HttpBaseModel extends BaseModel {
-    protected HttpConnector connector;
+    protected Session connector;
 
     public HttpBaseModel(){
-        connector = HttpConnector.connect();
+        connector = SimpleHttp.session(1);
     }
 
-    protected HttpConnector connect(){
+    protected Session connect(){
         return connector;
     }
 }
