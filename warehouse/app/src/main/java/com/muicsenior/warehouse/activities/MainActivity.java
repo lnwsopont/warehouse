@@ -18,15 +18,18 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         userModel = ModelManager.get(UserModel.class);
+
+        Intent intent = new Intent(this, CamActivity.class);
+        startActivity(intent);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
 
-        if(!userModel.isLogin()){
-            Intent intent = new Intent(this, LoginActivity.class);
-            startActivity(intent);
-        }
+//        if(!userModel.isLogin()){
+//            Intent intent = new Intent(this, LoginActivity.class);
+//            startActivity(intent);
+//        }
     }
 }

@@ -3,11 +3,18 @@ package com.tamemo.simplehttp;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.util.Log;
 
+import com.squareup.okhttp.Interceptor;
 import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
 import com.tamemo.Contextor;
 import com.tamemo.simplehttp.http.HTTPClient;
 
+import java.io.IOException;
+import java.net.CookieManager;
+import java.net.CookiePolicy;
+import java.util.HashSet;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -26,6 +33,7 @@ public class Session {
         client = new HTTPClient(this);
         client.setConnectTimeout(TIMEOUT, TimeUnit.SECONDS);
         client.setReadTimeout(TIMEOUT, TimeUnit.SECONDS);
+        client.setCookieHandler(new CookieManager());
     }
 
     public Connection connect() {

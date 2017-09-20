@@ -3,6 +3,7 @@
     package="com.muicsenior.warehouse">
 
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
@@ -23,7 +24,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.CamActivity" />
-        <activity android:name=".activities.LoginActivity"></activity>
+        <activity android:name=".activities.LoginActivity" />
+        <activity android:name=".activities.IncActivity"></activity>
     </application>
 
 </manifest>
