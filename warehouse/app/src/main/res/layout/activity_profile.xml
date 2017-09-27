@@ -4,18 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.muicsenior.warehouse.activities.MainActivity"
-    android:orientation="vertical"
     android:background="@drawable/wsl_small_1000_dark"
-    android:weightSum="1">
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="300dp"
-    android:layout_height="match_parent"
-    android:layout_gravity="center"
     android:orientation="vertical"
-    android:background="#00000000"
-    android:padding="8dp" >
+    android:weightSum="1"
+    tools:context="com.muicsenior.warehouse.activities.MainActivity">
 
 
     <LinearLayout
@@ -25,7 +17,7 @@
         android:layout_marginTop="48dp"
 
         android:orientation="horizontal"
-        android:padding="8dp" >
+        android:padding="8dp">
 
         <ImageView
             android:id="@+id/account_picture"
@@ -40,8 +32,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="20dp"
-            android:background="#a5a5a5"
-            android:orientation="vertical" >
+            android:background="#7e7e7e"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/account_name"
@@ -50,19 +42,22 @@
                 android:text="Name:"
                 android:textColor="@android:color/primary_text_light"
                 android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/account_email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Email:"
                 android:textColor="@android:color/secondary_text_light" />
+
             <TextView
                 android:id="@+id/account_contact"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Mobile No:"
+                android:text="Employee No:"
                 android:textColor="@android:color/secondary_text_light" />
-            <            <TextView
+
+            <TextView
                 android:id="@+id/account_dob"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -71,14 +66,14 @@
         </LinearLayout>
     </LinearLayout>
 
-    <TextView
+    <Button
+        android:id="@+id/change_pass"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
         android:layout_marginTop="24dp"
-        android:gravity="center_horizontal"
-        android:text="Hi"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:background="#41db09"
+        android:text="Change Password"
+        android:textColor="@android:color/white" />
 
     <Button
         android:id="@+id/sign_out"

@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.muicsenior.warehouse.R;
@@ -25,6 +26,7 @@ public class CamActivity extends AppCompatActivity {
 
     private QREader qrEader;
     TextView txt;
+    EditText qrCode;
 
     private void requestCameraPermission(){
         if (ContextCompat.checkSelfPermission(this,
@@ -65,6 +67,7 @@ public class CamActivity extends AppCompatActivity {
         int id = intent.getIntExtra("id", 100);
 
         txt = (TextView) findViewById(R.id.txt);
+        qrCode=(EditText) findViewById(R.id.qr);
 
         surfaceView = (SurfaceView) findViewById(R.id.camera_view);
         /*surfaceHolder = surfaceView.getHolder();
@@ -134,6 +137,7 @@ public class CamActivity extends AppCompatActivity {
     }
 
     private void onReceiveString(String msg){
+        qrCode.setText("QR");
         if(msg.startsWith("wh::")) {
             String customerCode, parcelCode;
             String[] s =msg.replace("wh::", "").split(":");

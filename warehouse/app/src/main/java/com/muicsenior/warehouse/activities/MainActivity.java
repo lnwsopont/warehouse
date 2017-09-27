@@ -35,17 +35,11 @@ public class MainActivity extends AppCompatActivity {
 
         btnScan2 = findViewById(R.id.btn_scan_2);
 
-        btnScan = (Button) findViewById(R.id.btn_scan);
         tvCustomerCode = (TextView) findViewById(R.id.tv_customer_code);
         tvParcelCode = (TextView) findViewById(R.id.tv_parcel_code);
         tvShelfCode = (TextView) findViewById(R.id.tv_shelf_code);
-        btnScan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this,CamActivity.class);
-                startActivityForResult(intent,REQ_CAM);
-            }
-        });
+
+
 
         btnScan2.setOnClickListener(new View.OnClickListener() {
             @Override
