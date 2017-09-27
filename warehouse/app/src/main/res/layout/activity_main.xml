@@ -59,15 +59,18 @@
 
         <Button
             android:id="@+id/checkin"
+            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Check-In" />
 
         <Button
-            android:id="@+id/cancel"
+            android:id="@+id/checkout"
+            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cancel" />
+            android:text="Check-Out" />
+
     </LinearLayout>
 
 
@@ -93,5 +96,9 @@
             android:textColor="#fff"/>
 
     </LinearLayout>
-
+    <ImageView
+        android:id="@+id/img1"
+        android:src="@mipmap/ic_launcher"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 </LinearLayout>

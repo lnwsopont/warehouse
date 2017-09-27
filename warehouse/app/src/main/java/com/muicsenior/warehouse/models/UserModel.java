@@ -13,30 +13,28 @@ public class UserModel extends HttpBaseModel {
 
     private User currentUser;
 
-    public void login(String id, String password, final BaseCallback<User> callback) {
-        connect().GET("http://api.mywarehouse.com/user/login", new Params().with("id", id).with("password", password), new OnResponseJson() {
+    public void login(int id, String pin, final BaseCallback<User> callback) {
+        Params params = new Params();
+        params.with("id",id);
+        params.with("pin",pin);
+        connect().POST(ROOT + "/api/user/login",params, new OnResponseJson() {
             @Override
             public void onSuccess(JSON res) {
-                boolean status = res.get("status", boolean.class);
-                if(status){
+                if(res.get("login",boolean.class)){
                     currentUser = new User();
-                    currentUser.id = res.get("data").get("id", String.class);
-                    currentUser.firstName = res.get("data").get("first_name", String.class);
-                    currentUser.lastName = res.get("data").get("last_name", String.class);
+                    currentUser.id  = res.get("info").get("id",int.class);
+                    currentUser.name  = res.get("info").get("name",String.class);
+                    currentUser.tel  = res.get("info").get("tel",String.class);
+                    currentUser.thumbUrl  = res.get("info").get("thumbUrl",String.class);
                     callback.success(currentUser);
                 }
                 else{
-                    callback.fail(res.get("code", int.class), res.get("msg", String.class));
+                    logout();
+                    callback.fail(-1,null);
                 }
-            }
-
-            @Override
-            public void onFail(int statusCode, String message) {
-                callback.fail(statusCode,message);
             }
         });
     }
-
     public void logout(){
         currentUser = null;
     }
