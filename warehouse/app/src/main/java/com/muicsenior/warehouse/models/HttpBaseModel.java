@@ -8,6 +8,7 @@ import com.tamemo.simplehttp.SimpleHttp;
  */
 
 public class HttpBaseModel extends BaseModel {
+    public static final String ROOT = "http://www.myisproject.com";
     protected Session connector;
 
     public HttpBaseModel(){

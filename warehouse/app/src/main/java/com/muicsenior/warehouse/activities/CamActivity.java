@@ -3,21 +3,17 @@ package com.muicsenior.warehouse.activities;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.PointF;
 import android.hardware.Camera;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.muicsenior.warehouse.R;
-
-import java.io.IOException;
 
 import github.nisrulz.qreader.QRDataListener;
 import github.nisrulz.qreader.QREader;
@@ -30,8 +26,9 @@ public class CamActivity extends AppCompatActivity {
 
     private QREader qrEader;
     TextView txt;
+    EditText qrCode;
 
-    private void per(){
+    private void requestCameraPermission(){
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -64,12 +61,13 @@ public class CamActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cam);
 
-        per();
+        requestCameraPermission();
 
         Intent intent = getIntent();
         int id = intent.getIntExtra("id", 100);
 
         txt = (TextView) findViewById(R.id.txt);
+        qrCode=(EditText) findViewById(R.id.qr);
 
         surfaceView = (SurfaceView) findViewById(R.id.camera_view);
         /*surfaceHolder = surfaceView.getHolder();
@@ -139,8 +137,21 @@ public class CamActivity extends AppCompatActivity {
     }
 
     private void onReceiveString(String msg){
+        qrCode.setText("QR");
         if(msg.startsWith("wh::")) {
+            String customerCode, parcelCode;
+            String[] s =msg.replace("wh::", "").split(":");
             Intent intent = new Intent();
+
+            if(s.length!=2)
+            {
+                return;
+            }
+            customerCode = s[0];
+            parcelCode = s[1];
+
+            intent.putExtra("customerCode",customerCode);
+            intent.putExtra("parcelCode",parcelCode);
             intent.putExtra("msg", msg);
             setResult(RESULT_OK, intent);
             finish();

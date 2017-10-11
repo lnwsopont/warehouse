@@ -45,6 +45,11 @@ public class MainApplication extends Application {
                             "}"));
                     return true;
                 }
+                if(url.equals("http://api.mywarehouse.com/parcel/1234/shelf")){
+                    res.onSuccess(new Response("{\n" +
+                            "\t\"code\":\"A1\"\n" +
+                            "}"));
+                }
                 return false;
             }
         });

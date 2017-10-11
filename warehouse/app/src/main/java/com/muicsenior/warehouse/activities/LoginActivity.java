@@ -16,7 +16,7 @@ import com.muicsenior.warehouse.models.UserModel;
 
 public class LoginActivity extends AppCompatActivity {
 
-    EditText userId, userPassword;
+    EditText userId, pin;
     Button btnLogin;
     TextView txtStatus;
 
@@ -26,7 +26,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         userId = (EditText) findViewById(R.id.user_id);
-        userPassword = (EditText) findViewById(R.id.user_password);
+        pin = (EditText) findViewById(R.id.user_password);
         btnLogin = (Button) findViewById(R.id.btn_login);
         txtStatus = (TextView) findViewById(R.id.txt_status);
 
@@ -36,7 +36,7 @@ public class LoginActivity extends AppCompatActivity {
                 txtStatus.setText("connecting...");
                 btnLogin.setEnabled(false);
 
-                ModelManager.get(UserModel.class).login(userId.getText().toString(), userPassword.getText().toString(), new BaseCallback<User>() {
+                ModelManager.get(UserModel.class).login(Integer.parseInt(userId.getText().toString()), pin.getText().toString(), new BaseCallback<User>() {
                     @Override
                     public void success(User result) {
                         Toast.makeText(LoginActivity.this, "login success !", Toast.LENGTH_SHORT).show();

@@ -9,9 +9,14 @@
 
     <TextView
         android:id="@+id/txt"
-        android:text="---no---"
+        android:text="QR Code---wh::123:456"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+    <EditText
+        android:id="@+id/qr"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
 
     <SurfaceView
         android:id="@+id/camera_view"
