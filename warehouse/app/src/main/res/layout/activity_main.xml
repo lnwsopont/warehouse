@@ -78,10 +78,10 @@
         android:id="@+id/btn_scan_2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#333"
         android:layout_margin="10dp"
-        android:padding="10dp"
-        android:gravity="center">
+        android:background="#333"
+        android:gravity="center"
+        android:padding="10dp">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -89,16 +89,13 @@
             android:src="@mipmap/ic_launcher" />
 
         <TextView
-            android:text="Scan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="32sp"
-            android:textColor="#fff"/>
+            android:text="Scan"
+            android:textColor="#fff"
+            android:textSize="32sp" />
 
     </LinearLayout>
-    <ImageView
-        android:id="@+id/img1"
-        android:src="@mipmap/ic_launcher"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+
+
 </LinearLayout>

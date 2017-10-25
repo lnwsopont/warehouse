@@ -28,6 +28,14 @@ public class MainmenuActivity extends AppCompatActivity {
         btnScanner = (Button) findViewById(R.id.btn_scanner);
         btnProfile = (Button) findViewById(R.id.btn_profile);
 
+        btnProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainmenuActivity.this, ProfileActivity.class);
+                startActivity(intent);
+            }
+        });
+
         btnScanner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
