@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         parcelModel = ModelManager.get(ParcelModel.class);
 
         btnScan2 = findViewById(R.id.btn_scan_2);
-        img1 = (ImageView) findViewById(R.id.img1);
+
         tvCustomerCode = (TextView) findViewById(R.id.tv_customer_code);
         tvParcelCode = (TextView) findViewById(R.id.tv_parcel_code);
         tvShelfCode = (TextView) findViewById(R.id.tv_shelf_code);
