@@ -10,6 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -26,9 +28,13 @@ public class CamActivity extends AppCompatActivity {
 
     private QREader qrEader;
     TextView txt;
-    EditText qrCode;
+    EditText qrManual;
+    TextView qrDisplay;
+    Button btnOk, btnManual;
 
-    private void requestCameraPermission(){
+    String currentQr = "";
+
+    private void requestCameraPermission() {
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -67,56 +73,43 @@ public class CamActivity extends AppCompatActivity {
         int id = intent.getIntExtra("id", 100);
 
         txt = (TextView) findViewById(R.id.txt);
-        qrCode=(EditText) findViewById(R.id.qr);
+        qrManual = (EditText) findViewById(R.id.et_qr_manual);
+        qrDisplay = (TextView) findViewById(R.id.tv_qr);
+        btnOk = (Button) findViewById(R.id.btn_ok);
+        btnManual = (Button) findViewById(R.id.btn_manual);
 
-        surfaceView = (SurfaceView) findViewById(R.id.camera_view);
-        /*surfaceHolder = surfaceView.getHolder();
-        surfaceHolder.addCallback(new SurfaceHolder.Callback() {
+        btnOk.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void surfaceCreated(SurfaceHolder holder) {
-                camera = Camera.open();
-                Camera.Parameters param;
-                param = camera.getParameters();
-                param.setPreviewSize(352, 288);
-                camera.setParameters(param);
-                try {
-                    camera.setPreviewDisplay(surfaceHolder);
-                    camera.startPreview();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+            public void onClick(View v) {
+                String customerCode, parcelCode;
+                String[] s = currentQr.replace("wh::", "").split(":");
+                Intent intent = new Intent();
 
-            @Override
-            public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-
-                if (surfaceHolder.getSurface() == null) {
+                if (s.length != 2) {
                     return;
                 }
+                customerCode = s[0];
+                parcelCode = s[1];
 
-                try {
-                    camera.stopPreview();
-                } catch (Exception e) {
-
-                }
-
-                try {
-                    camera.setPreviewDisplay(surfaceHolder);
-                    camera.startPreview();
-                } catch (Exception e) {
-
-                }
+                intent.putExtra("customerCode", customerCode);
+                intent.putExtra("parcelCode", parcelCode);
+                intent.putExtra("qr", currentQr);
+                setResult(RESULT_OK, intent);
+                finish();
             }
+        });
 
+        btnManual.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void surfaceDestroyed(SurfaceHolder holder) {
-                camera.stopPreview();
-                camera.release();
-                camera = null;
+            public void onClick(View v) {
+                qrDisplay.setVisibility(View.GONE);
+                qrManual.setVisibility(View.VISIBLE);
             }
-        });*/
+        });
 
+        surfaceView = (SurfaceView) findViewById(R.id.camera_view);
 
+        int w;
         qrEader = new QREader.Builder(this, surfaceView, new QRDataListener() {
             @Override
             public void onDetected(final String data) {
@@ -129,32 +122,17 @@ public class CamActivity extends AppCompatActivity {
             }
         }).facing(QREader.BACK_CAM)
                 .enableAutofocus(true)
-                .height(surfaceView.getHeight())
-                .width(surfaceView.getWidth())
+                .width(w = surfaceView.getWidth())
+                .height(w)
                 .build();
-
 
     }
 
-    private void onReceiveString(String msg){
-        qrCode.setText("QR");
-        if(msg.startsWith("wh::")) {
-            String customerCode, parcelCode;
-            String[] s =msg.replace("wh::", "").split(":");
-            Intent intent = new Intent();
-
-            if(s.length!=2)
-            {
-                return;
-            }
-            customerCode = s[0];
-            parcelCode = s[1];
-
-            intent.putExtra("customerCode",customerCode);
-            intent.putExtra("parcelCode",parcelCode);
-            intent.putExtra("msg", msg);
-            setResult(RESULT_OK, intent);
-            finish();
+    private void onReceiveString(String qr) {
+        qrDisplay.setText(qr);
+        qrManual.setText(qr);
+        if (qr.startsWith("wh::")) {
+            currentQr = qr;
         }
     }
 

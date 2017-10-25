@@ -34,6 +34,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        if(true){
+            startActivity(new Intent(this, HomeActivity.class));
+            finish();
+            return;
+        }
+
         userModel = ModelManager.get(UserModel.class);
         parcelModel = ModelManager.get(ParcelModel.class);
 
