@@ -7,7 +7,8 @@ package com.muicsenior.warehouse.dao;
 public class User extends BaseDao {
 
     public int id;
-    public String name;
+    public String lastName;
+    public String firstName;
     public String tel;
     public String thumbUrl;
 

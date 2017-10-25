@@ -22,10 +22,11 @@ public class UserModel extends HttpBaseModel {
             public void onSuccess(JSON res) {
                 if(res.get("login",boolean.class)){
                     currentUser = new User();
-                    currentUser.id  = res.get("info").get("id",int.class);
-                    currentUser.name  = res.get("info").get("name",String.class);
-                    currentUser.tel  = res.get("info").get("tel",String.class);
-                    currentUser.thumbUrl  = res.get("info").get("thumbUrl",String.class);
+                    currentUser.id  = Integer.parseInt(res.get("info").get("emp_id",String.class));
+                    currentUser.firstName  = res.get("info").get("emp_fname",String.class);
+                    currentUser.lastName  = res.get("info").get("emp_lname",String.class);
+                    currentUser.tel  = res.get("info").get("emp_tel",String.class);
+                    currentUser.thumbUrl  = res.get("info").get("emp_avatar",String.class);
                     callback.success(currentUser);
                 }
                 else{

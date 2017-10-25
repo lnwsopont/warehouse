@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.muicsenior.warehouse.activities.MainmenuActivity">
+
+    <Button
+        android:id="@+id/btn_scanner"
+        android:layout_width="114dp"
+        android:layout_height="44dp"
+        android:text="Scanner"
+        tools:layout_editor_absoluteY="84dp"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <Button
+        android:id="@+id/btn_profile"
+        android:layout_width="88dp"
+        android:layout_height="wrap_content"
+        android:text="profile"
+         />
+
+</android.support.constraint.ConstraintLayout>
