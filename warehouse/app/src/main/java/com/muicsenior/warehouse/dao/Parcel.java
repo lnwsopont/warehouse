@@ -11,4 +11,5 @@ public class Parcel extends BaseDao {
     public int customerId;
     public enum STATUS{IN_SHELF,UNKNOWN}
     public STATUS status;
+    public Shelf shelf;
 }

@@ -22,7 +22,7 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         scanPanel = (ScanPanel) findViewById(R.id.scan_panel);
-        scanPanel.setOnClickListener(new View.OnClickListener() {
+        scanPanel.setOnScanListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openCamActivity();
@@ -39,7 +39,7 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, final int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQ_CAM) {
+        if (requestCode == REQ_CAM && data != null) {
             String qr = data.getStringExtra("qr");
             scanPanel.addQr(qr);
         }

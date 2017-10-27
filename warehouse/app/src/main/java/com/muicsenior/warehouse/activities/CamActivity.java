@@ -28,6 +28,7 @@ public class CamActivity extends AppCompatActivity {
 
     private QREader qrEader;
     TextView txt;
+    TextView scanStatus;
     EditText qrManual;
     TextView qrDisplay;
     Button btnOk, btnManual;
@@ -73,6 +74,7 @@ public class CamActivity extends AppCompatActivity {
         int id = intent.getIntExtra("id", 100);
 
         txt = (TextView) findViewById(R.id.txt);
+        scanStatus = (TextView) findViewById(R.id.tv_scan_format_status);
         qrManual = (EditText) findViewById(R.id.et_qr_manual);
         qrDisplay = (TextView) findViewById(R.id.tv_qr);
         btnOk = (Button) findViewById(R.id.btn_ok);
@@ -110,6 +112,7 @@ public class CamActivity extends AppCompatActivity {
         surfaceView = (SurfaceView) findViewById(R.id.camera_view);
 
         int w;
+
         qrEader = new QREader.Builder(this, surfaceView, new QRDataListener() {
             @Override
             public void onDetected(final String data) {
@@ -129,16 +132,30 @@ public class CamActivity extends AppCompatActivity {
     }
 
     private void onReceiveString(String qr) {
-        qrDisplay.setText(qr);
-        qrManual.setText(qr);
+
         if (qr.startsWith("wh::")) {
+
+            qrDisplay.setText(qr);
+            qrManual.setText(qr);
+
             currentQr = qr;
+            scanStatus.setVisibility(View.GONE);
+            btnOk.setEnabled(true);
+            btnOk.setBackgroundColor(getResources().getColor(R.color.btn_ok));
+        }
+        else if(currentQr.isEmpty()){
+
+            qrDisplay.setText(qr);
+            qrManual.setText(qr);
+
+            scanStatus.setVisibility(View.VISIBLE);
         }
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+        qrEader.start();
     }
 
     @Override

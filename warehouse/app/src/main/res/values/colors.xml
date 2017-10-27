@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="red">#FF0000</color>
+    <color name="green">#8cdd13</color>
+    <color name="right_scan">#57da15</color>
+    <color name="wrong_scan">#cc1010</color>
+    <color name="btn_ok">#6dca0f</color>
+    <color name="btn_disable">#a9a9a9</color>
     <color name="blue">#0000FF</color>
     <color name="colorPrimary">#de2222</color>
     <color name="colorPrimaryDark">#b71f1f</color>

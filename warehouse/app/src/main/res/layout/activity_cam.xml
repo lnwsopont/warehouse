@@ -37,7 +37,17 @@
         >
 
         <TextView
-            android:text="wh::123::456"
+            android:id="@+id/tv_scan_format_status"
+            android:textSize="12sp"
+            android:textColor="@color/wrong_scan"
+            android:text="wrong format !"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
+        <TextView
+            android:text="QR Code"
+            android:fontFamily="serif-monospace"
+            android:textStyle="bold"
             android:textSize="32sp"
             android:id="@+id/tv_qr"
             android:layout_width="match_parent"
@@ -59,7 +69,8 @@
                 android:layout_weight="2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:background="#6dca0f"
+                android:background="@color/btn_disable"
+                android:enabled="false"
                 android:layout_margin="2dp"
                 android:text="OK !" />
 
