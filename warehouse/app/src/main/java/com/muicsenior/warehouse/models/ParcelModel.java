@@ -31,10 +31,9 @@ public class ParcelModel extends HttpBaseModel {
             @Override
             public void onSuccess(JSON res) {
                 Log.i("aaa", res.toString());
-                parcel.id = res.get("id", String.class);
-                parcel.name = res.get("name", String.class);
-                parcel.customerId = res.get("customer_id", int.class);
-                String status = res.get("status", String.class);
+                parcel.id = res.get("info").get("parcel_id", String.class);
+                //parcel.customerId = res.get("customer_id", int.class);
+                String status = res.get("info").get("parcel_status", String.class);
                 if ("inshelf".equals(status)) {
                     parcel.status = Parcel.STATUS.IN_SHELF;
                 } else {

@@ -7,9 +7,15 @@ package com.muicsenior.warehouse.dao;
 public class Parcel extends BaseDao {
 
     public String id;
-    public String name;
     public int customerId;
-    public enum STATUS{IN_SHELF,UNKNOWN}
-    public STATUS status;
+    public enum STATUS{LOADING, IN_SHELF, UNKNOWN}
+    public STATUS status = STATUS.LOADING;
     public Shelf shelf;
+
+    public void from(Parcel other){
+        id = other.id;
+        customerId = other.customerId;
+        status = other.status;
+        shelf = other.shelf;
+    }
 }

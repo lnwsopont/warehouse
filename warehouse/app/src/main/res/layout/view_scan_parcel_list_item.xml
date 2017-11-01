@@ -4,38 +4,71 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.muicsenior.warehouse.activities.CamActivity"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:padding="5dp"
-    >
+    tools:context="com.muicsenior.warehouse.activities.CamActivity">
 
-    <TextView
-        android:id="@+id/tv_parcel_name"
-        android:text="parcel name"
-        android:textColor="#000000"
-        android:textSize="24sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <ImageView
+        android:src="@mipmap/ic_launcher"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_margin="2dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
 
         <TextView
             android:id="@+id/tv_parcel_id"
-            android:text="id"
-            android:textColor="#444444"
-            android:fontFamily="serif-monospace"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:id="@+id/tv_parcel_status"
-            android:text=""
-            android:textColor="@color/green"
-            android:layout_marginLeft="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="parcel id"
+            android:textColor="#000000"
+            android:textSize="24sp" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_parcel_status_loading"
+                android:text="loading data..."
+                android:textColor="#ccc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tv_parcel_status_in"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="in shelf"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:textColor="#fff"
+                android:background="#9b2"
+                android:visibility="gone"
+                />
+
+            <TextView
+                android:id="@+id/tv_parcel_status_out"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="new coming"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:padding="2dp"
+                android:textColor="#333"
+                android:background="#ea0"
+                android:visibility="gone"
+                />
+
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

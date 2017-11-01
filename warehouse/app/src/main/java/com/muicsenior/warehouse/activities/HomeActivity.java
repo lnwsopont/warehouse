@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
 import com.muicsenior.warehouse.R;
 import com.muicsenior.warehouse.views.ScanPanel;
@@ -40,8 +39,8 @@ public class HomeActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, final int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQ_CAM && data != null) {
-            String qr = data.getStringExtra("qr");
-            scanPanel.addQr(qr);
+            String parcelCode = data.getStringExtra("parcelCode");
+            scanPanel.addParcelCode(parcelCode);
         }
     }
 }

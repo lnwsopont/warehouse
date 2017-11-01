@@ -8,6 +8,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -32,6 +33,7 @@ public class CamActivity extends AppCompatActivity {
     EditText qrManual;
     TextView qrDisplay;
     Button btnOk, btnManual;
+    View manualInput;
 
     String currentQr = "";
 
@@ -79,23 +81,18 @@ public class CamActivity extends AppCompatActivity {
         qrDisplay = (TextView) findViewById(R.id.tv_qr);
         btnOk = (Button) findViewById(R.id.btn_ok);
         btnManual = (Button) findViewById(R.id.btn_manual);
+        manualInput = findViewById(R.id.manual_input);
 
         btnOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String customerCode, parcelCode;
-                String[] s = currentQr.replace("wh::", "").split(":");
+
+                String parcelCode = currentQr.replace("wh::", "");
+
                 Intent intent = new Intent();
-
-                if (s.length != 2) {
-                    return;
-                }
-                customerCode = s[0];
-                parcelCode = s[1];
-
-                intent.putExtra("customerCode", customerCode);
                 intent.putExtra("parcelCode", parcelCode);
                 intent.putExtra("qr", currentQr);
+
                 setResult(RESULT_OK, intent);
                 finish();
             }
@@ -105,7 +102,15 @@ public class CamActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 qrDisplay.setVisibility(View.GONE);
-                qrManual.setVisibility(View.VISIBLE);
+                manualInput.setVisibility(View.VISIBLE);
+            }
+        });
+
+        qrManual.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                onReceiveString("wh::" + qrManual.getText().toString());
+                return false;
             }
         });
 
@@ -136,7 +141,7 @@ public class CamActivity extends AppCompatActivity {
         if (qr.startsWith("wh::")) {
 
             qrDisplay.setText(qr);
-            qrManual.setText(qr);
+            qrManual.setText(qr.replace("wh::", ""));
 
             currentQr = qr;
             scanStatus.setVisibility(View.GONE);
