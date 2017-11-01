@@ -1,10 +1,12 @@
 package com.muicsenior.warehouse.views;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
+import android.support.v7.app.AlertDialog;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -73,8 +75,21 @@ public class ScanPanel extends RelativeLayout {
         btnClear.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                CurrentScanTaskModel.sharedInstance().clear();
-                checkStateChange();
+                AlertDialog dialog = new AlertDialog.Builder(getContext())
+                        .setTitle("Confirm?")
+                        .setMessage("do you want to remove parcels")
+                        .setPositiveButton("Remove All", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                CurrentScanTaskModel.sharedInstance().clear();
+                                checkStateChange();
+                            }
+                        })
+                        .setNegativeButton("Cancel", null)
+                        .create();
+                dialog.show();
+                dialog.getButton(dialog.BUTTON_NEGATIVE).setTextColor(getResources().getColor(R.color.btn_disable));
+
             }
         });
 
@@ -96,7 +111,7 @@ public class ScanPanel extends RelativeLayout {
     }
 
     public void addParcelCode(String parcelCode) {
-        Toast.makeText(Contextor.getInstance().getContext(), parcelCode, Toast.LENGTH_SHORT).show();
+        Toast.makeText(Contextor.getInstance().getContext(), "Loading Parcel.... ", Toast.LENGTH_SHORT).show();
         CurrentScanTaskModel.sharedInstance().add(parcelCode);
         checkStateChange();
     }
@@ -107,7 +122,7 @@ public class ScanPanel extends RelativeLayout {
     }
 
 
-    public void renderParcelItem(ScanParcelListItem item, Parcel parcel){
+    public void renderParcelItem(ScanParcelListItem item, Parcel parcel) {
         item.id.setText("id: " + parcel.id);
 
         item.statusIn.setVisibility(View.GONE);

@@ -49,6 +49,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />-->
             <Button
+                android:id="@+id/btn_confirm"
+                android:text="Confirm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#fff"
+                android:background="@color/btn_ok"
+                android:layout_weight="2"/>
+            <Button
                 android:id="@+id/btn_clear"
                 android:text="clear"
                 android:layout_width="wrap_content"
