@@ -32,12 +32,16 @@ public class ParcelModel extends HttpBaseModel {
             public void onSuccess(JSON res) {
                 Log.i("aaa", res.toString());
                 parcel.id = res.get("info").get("parcel_id", String.class);
+                parcel.shelf.code = res.get("info").get("shelf_code", String.class);
                 //parcel.customerId = res.get("customer_id", int.class);
                 String status = res.get("info").get("parcel_status", String.class);
-                if ("inshelf".equals(status)) {
-                    parcel.status = Parcel.STATUS.IN_SHELF;
+
+                if ("1".equals(status)) {
+                    parcel.status = Parcel.STATUS.CHECK_IN;
+                } else if ("2".equals(status)) {
+                    parcel.status = Parcel.STATUS.CHECK_OUT;
                 } else {
-                    parcel.status = Parcel.STATUS.UNKNOWN;
+                    parcel.status = Parcel.STATUS.EXPIRED;
                 }
                 callback.success(parcel);
             }

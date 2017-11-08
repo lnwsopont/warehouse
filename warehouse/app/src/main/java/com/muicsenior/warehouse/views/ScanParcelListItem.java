@@ -19,7 +19,8 @@ import com.muicsenior.warehouse.R;
 public class ScanParcelListItem extends RelativeLayout {
 
     View rootView;
-    public TextView id, statusIn, statusOut, statusLoading;
+    public TextView id, statusIn, statusInToShelf, statusOut, statusLoading;
+    boolean mutex = false;
 
     public ScanParcelListItem(Context context) {
         super(context);
@@ -48,6 +49,7 @@ public class ScanParcelListItem extends RelativeLayout {
 
         id = (TextView) rootView.findViewById(R.id.tv_parcel_id);
         statusIn = (TextView) rootView.findViewById(R.id.tv_parcel_status_in);
+        statusInToShelf = (TextView) rootView.findViewById(R.id.tv_parcel_status_in_to_shelf);
         statusOut = (TextView) rootView.findViewById(R.id.tv_parcel_status_out);
         statusLoading = (TextView) rootView.findViewById(R.id.tv_parcel_status_loading);
     }

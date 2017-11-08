@@ -8,10 +8,10 @@ import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -24,7 +24,6 @@ import com.muicsenior.warehouse.models.BaseCallback;
 import com.muicsenior.warehouse.models.CurrentScanTaskModel;
 import com.muicsenior.warehouse.models.ParcelModel;
 import com.tamemo.Contextor;
-import com.tamemo.simplehttp.SimpleHttp;
 
 /**
  * Created by Ta on 2017-10-25.
@@ -95,6 +94,59 @@ public class ScanPanel extends RelativeLayout {
 
         adapter = new CurrentParcelTaskAdapter();
         parcelList.setAdapter(adapter);
+        parcelList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                ScanParcelListItem item = (ScanParcelListItem) view;
+                if(item.mutex){
+                    return;
+                }
+                AlertDialog dialog = new AlertDialog.Builder(getContext())
+                        .setTitle("Confirm?")
+                        .setMessage("do you want to perform task on parcel " + item.id.getText().toString())
+                        .setPositiveButton("Perform", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                CurrentScanTaskModel.sharedInstance().clear(position);
+                                checkStateChange();
+                                Toast.makeText(getContext(), "Done!!", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .setNegativeButton("Cancel", null)
+                        .create();
+                dialog.show();
+                dialog.getButton(dialog.BUTTON_NEGATIVE).setTextColor(getResources().getColor(R.color.btn_disable));
+                dialog.getButton(dialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.right_scan));
+            }
+        });
+        parcelList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+                final ScanParcelListItem item = (ScanParcelListItem) view;
+                item.mutex = true;
+                AlertDialog dialog = new AlertDialog.Builder(getContext())
+                        .setTitle("Confirm?")
+                        .setMessage("do you want to remove this parcel " + item.id.getText().toString())
+                        .setPositiveButton("Remove", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                CurrentScanTaskModel.sharedInstance().clear(position);
+                                checkStateChange();
+                                item.mutex = false;
+                            }
+                        })
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                item.mutex = false;
+                            }
+                        })
+                        .create();
+                dialog.show();
+                dialog.getButton(dialog.BUTTON_NEGATIVE).setTextColor(getResources().getColor(R.color.btn_disable));
+                return false;
+            }
+        });
 
         checkStateChange();
     }
@@ -112,8 +164,11 @@ public class ScanPanel extends RelativeLayout {
 
     public void addParcelCode(String parcelCode) {
         Toast.makeText(Contextor.getInstance().getContext(), "Loading Parcel.... ", Toast.LENGTH_SHORT).show();
-        CurrentScanTaskModel.sharedInstance().add(parcelCode);
-        checkStateChange();
+        if (CurrentScanTaskModel.sharedInstance().add(parcelCode)) {
+            checkStateChange();
+        } else {
+            Toast.makeText(Contextor.getInstance().getContext(), "Parcel id: " + parcelCode + " already exist!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void setOnScanListener(View.OnClickListener onScanListener) {
@@ -123,18 +178,29 @@ public class ScanPanel extends RelativeLayout {
 
 
     public void renderParcelItem(ScanParcelListItem item, Parcel parcel) {
+
+        if (parcel.id == null) {
+            item.id.setText("not found parcel");
+            item.statusOut.setVisibility(View.GONE);
+            item.statusLoading.setVisibility(View.GONE);
+            return;
+        }
+
         item.id.setText("id: " + parcel.id);
+        item.statusInToShelf.setText(parcel.shelf.code);
 
         item.statusIn.setVisibility(View.GONE);
+        item.statusInToShelf.setVisibility(View.GONE);
         item.statusOut.setVisibility(View.GONE);
         item.statusLoading.setVisibility(View.VISIBLE);
 
-        if (parcel.status == Parcel.STATUS.IN_SHELF) {
+        if (parcel.status == Parcel.STATUS.CHECK_IN) {
             item.statusIn.setVisibility(View.VISIBLE);
+            item.statusInToShelf.setVisibility(View.VISIBLE);
             item.statusLoading.setVisibility(View.GONE);
         }
 
-        if (parcel.status == Parcel.STATUS.UNKNOWN) {
+        if (parcel.status == Parcel.STATUS.CHECK_OUT) {
             item.statusOut.setVisibility(View.VISIBLE);
             item.statusLoading.setVisibility(View.GONE);
         }
@@ -158,7 +224,7 @@ public class ScanPanel extends RelativeLayout {
 
         @NonNull
         @Override
-        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+        public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 
             final Parcel parcel = CurrentScanTaskModel.sharedInstance().get(position);
             final ScanParcelListItem item = new ScanParcelListItem(Contextor.getInstance().getContext());
@@ -169,6 +235,16 @@ public class ScanPanel extends RelativeLayout {
                 parcelModel.getInfo(parcel.id, new BaseCallback<Parcel>() {
                     @Override
                     public void success(Parcel result) {
+                        if (result.id == null) {
+                            CurrentScanTaskModel.sharedInstance().clear(position);
+                            Toast.makeText(getContext(), "parcel not found !", Toast.LENGTH_SHORT).show();
+                            notifyDataSetChanged();
+                        } else if (result.status == Parcel.STATUS.EXPIRED) {
+                            CurrentScanTaskModel.sharedInstance().clear(position);
+                            Toast.makeText(getContext(), "parcel expired !", Toast.LENGTH_SHORT).show();
+                            notifyDataSetChanged();
+                        }
+
                         parcel.from(result);
                         renderParcelItem(item, parcel);
                     }

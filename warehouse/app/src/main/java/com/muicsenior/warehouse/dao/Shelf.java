@@ -5,6 +5,6 @@ package com.muicsenior.warehouse.dao;
  */
 
 public class Shelf {
-    public String code;
+    public String code = "";
 
 }

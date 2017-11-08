@@ -1,5 +1,7 @@
 package com.muicsenior.warehouse.models;
 
+import android.util.Log;
+
 import com.muicsenior.warehouse.dao.Parcel;
 import com.muicsenior.warehouse.dao.Shelf;
 
@@ -23,10 +25,16 @@ public class CurrentScanTaskModel extends BaseModel {
         return instance;
     }
 
-    public void add(String parcelCode){
+    public boolean add(String parcelCode){
         final Parcel parcel = new Parcel();
         parcel.id = parcelCode;
+
+        if(parcels.contains(parcel)){
+            return false;
+        }
+
         parcels.add(parcel);
+        return true;
     }
 
     public void clear(){

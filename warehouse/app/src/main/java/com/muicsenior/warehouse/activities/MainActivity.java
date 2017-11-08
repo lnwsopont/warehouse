@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
             parcelModel.getInfo(parcelCode, new BaseCallback<Parcel>() {
                 @Override
                 public void success(Parcel parcel) {
-                    if (parcel.status == Parcel.STATUS.IN_SHELF) {
+                    if (parcel.status == Parcel.STATUS.CHECK_OUT) {
                         checkOut.setVisibility(View.VISIBLE);
                     } else {
                         checkIn.setVisibility(View.VISIBLE);
