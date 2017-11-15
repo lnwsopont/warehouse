@@ -1,9 +1,13 @@
 package com.muicsenior.warehouse.models;
 
+import com.muicsenior.warehouse.dao.Task;
 import com.muicsenior.warehouse.dao.User;
 import com.tamemo.dao.JSON;
 import com.tamemo.simplehttp.OnResponseJson;
 import com.tamemo.simplehttp.Params;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Ta on 2017-08-17.
@@ -46,6 +50,22 @@ public class UserModel extends HttpBaseModel {
 
     public User getCurrentUser(){
         return currentUser;
+    }
+
+    public void loadTasks(final BaseCallback<List<Task>> callback) {
+        connect().GET(ROOT + "/api/user/task", new OnResponseJson() {
+            @Override
+            public void onSuccess(JSON res) {
+                List<Task> list = new ArrayList<Task>();
+                JSON tasks = res.get("tasks");
+                for(int i = 0; i< tasks.length();i++){
+                    JSON task = tasks.get(i);
+                    list.add(new Task(task.get("id", int.class), task.get("desc",String.class)));
+                }
+                callback.success(list);
+            }
+        });
+
     }
 
 }

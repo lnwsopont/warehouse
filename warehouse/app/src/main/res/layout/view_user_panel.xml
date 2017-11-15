@@ -12,7 +12,7 @@
     <LinearLayout
         android:id="@+id/user_profile"
         android:layout_width="match_parent"
-        android:layout_height="64dp"
+        android:layout_height="80dp"
         android:layout_gravity="center"
         android:orientation="horizontal"
         android:padding="8dp">
