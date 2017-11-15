@@ -27,6 +27,8 @@ public class MainApplication extends Application {
         SimpleHttp.session(1).mock(true, new Session.PreProcess() {
             @Override
             public boolean handle(Connection.Method method, String url, Params params, OnResponse res) {
+
+
                 if(url.equals("http://api.mywarehouse.com/user/login")){
                     try {
                         Thread.sleep(1000);

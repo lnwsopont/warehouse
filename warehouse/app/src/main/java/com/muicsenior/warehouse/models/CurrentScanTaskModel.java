@@ -36,7 +36,20 @@ public class CurrentScanTaskModel extends BaseModel {
         parcels.add(parcel);
         return true;
     }
-
+    public void submit(int index,BaseCallback <Boolean> result){
+        String[] arr ={parcels.get(index).id};
+        ParcelModel parcelModel = new ParcelModel();
+        parcelModel.submit(arr ,result);
+    }
+    public void submit(BaseCallback <Boolean> result){
+        String[] arr = new String[parcels.size()];
+        int i = 0;
+        for(Parcel p: parcels){
+            arr[i++] = p.id;
+        }
+        ParcelModel parcelModel = new ParcelModel();
+        parcelModel.submit(arr ,result);
+    }
     public void clear(){
         parcels.clear();
     }

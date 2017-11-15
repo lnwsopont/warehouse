@@ -36,7 +36,7 @@ public class ScanPanel extends RelativeLayout {
     View layoutScanHasItem;
     View layoutScanEmpty;
     View btnScan;
-    Button btnClear;
+    Button btnClear,btnConfirm;
     ListView parcelList;
     CurrentParcelTaskAdapter adapter;
 
@@ -68,8 +68,47 @@ public class ScanPanel extends RelativeLayout {
         layoutScanEmpty = rootView.findViewById(R.id.scan_empty);
         layoutScanHasItem = rootView.findViewById(R.id.scan_has_item);
         btnScan = rootView.findViewById(R.id.btn_scan);
+        btnConfirm = (Button) rootView.findViewById(R.id.btn_confirm);
         btnClear = (Button) rootView.findViewById(R.id.btn_clear);
         parcelList = (ListView) rootView.findViewById(R.id.lv_parcel);
+
+        btnConfirm.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog dialog = new AlertDialog.Builder(getContext())
+                        .setTitle("Confirm?")
+                        .setMessage("do you want to perform task on all parcel")
+                        .setPositiveButton("Perform", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                CurrentScanTaskModel.sharedInstance().submit(new BaseCallback<Boolean>() {
+                                    @Override
+                                    public void success(Boolean status) {
+                                        if(status) {
+
+                                            CurrentScanTaskModel.sharedInstance().clear();
+                                            checkStateChange();
+                                            Toast.makeText(getContext(), "Done!!", Toast.LENGTH_SHORT).show();
+                                        }
+                                        else{
+                                            Toast.makeText(getContext(), "Error: cannot update status", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                    @Override
+                                    public void fail(int status, String message) {
+                                        Toast.makeText(getContext(), "Error: try again later", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+
+                            }
+                        })
+                        .setNegativeButton("Cancel", null)
+                        .create();
+                dialog.show();
+                dialog.getButton(dialog.BUTTON_NEGATIVE).setTextColor(getResources().getColor(R.color.btn_disable));
+                dialog.getButton(dialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.right_scan));
+            }
+        });
 
         btnClear.setOnClickListener(new OnClickListener() {
             @Override
@@ -107,9 +146,24 @@ public class ScanPanel extends RelativeLayout {
                         .setPositiveButton("Perform", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                CurrentScanTaskModel.sharedInstance().clear(position);
-                                checkStateChange();
-                                Toast.makeText(getContext(), "Done!!", Toast.LENGTH_SHORT).show();
+                                CurrentScanTaskModel.sharedInstance().submit(position, new BaseCallback<Boolean>() {
+                                    @Override
+                                    public void success(Boolean status) {
+                                        if (status) {
+
+                                            CurrentScanTaskModel.sharedInstance().clear(position);
+                                            checkStateChange();
+                                            Toast.makeText(getContext(), "Done!!", Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Toast.makeText(getContext(), "Error: cannot update status", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                    @Override
+                                    public void fail(int status, String message) {
+                                        Toast.makeText(getContext(), "Error: try again later", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+
                             }
                         })
                         .setNegativeButton("Cancel", null)

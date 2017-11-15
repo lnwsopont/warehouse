@@ -6,6 +6,7 @@ import com.muicsenior.warehouse.dao.Parcel;
 import com.muicsenior.warehouse.dao.Shelf;
 import com.tamemo.dao.JSON;
 import com.tamemo.simplehttp.OnResponseJson;
+import com.tamemo.simplehttp.Params;
 
 /**
  * Created by Asus on 9/20/2017.
@@ -48,8 +49,26 @@ public class ParcelModel extends HttpBaseModel {
 
         });
 
-
     }
+    public void submit(String[] parcelIds, final BaseCallback <Boolean> result){
+        String str = "";
+        for(String id : parcelIds)
+        {
+            str += id +",";
+        }
+        connect().POST(ROOT + "/api/parcel/submit",new Params().with("parcel_ids",str), new OnResponseJson() {
+            @Override
+            public void onSuccess(JSON res) {
+                Boolean status = res.get("status",Boolean.class);
+                result.success(status!= null && status);
+            }
 
+            @Override
+            public void onFail(int statusCode, String message) {
+                super.onFail(statusCode, message);
+                result.fail(statusCode,message);
+            }
+        });
+    }
 
 }

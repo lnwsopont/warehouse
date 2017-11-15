@@ -9,5 +9,6 @@
     <color name="blue">#0000FF</color>
     <color name="colorPrimary">#de2222</color>
     <color name="colorPrimaryDark">#b71f1f</color>
+    <color name="profile">#696969</color>
     <color name="colorAccent">#de2222</color>
 </resources>
