@@ -50,10 +50,12 @@ public class UserPanel extends RelativeLayout {
 
     private void initInflate() {
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        inflater.inflate(R.layout.view_user_panel, this);
+        rootView = inflater.inflate(R.layout.view_user_panel, this);
         userProfile = rootView.findViewById(R.id.user_profile);
 
     }
+
+
 
 
     private void initInstance(){
