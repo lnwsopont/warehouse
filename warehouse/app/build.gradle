@@ -1,12 +1,12 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 25
+    compileSdkVersion 26
     buildToolsVersion "26.0.1"
     defaultConfig {
         applicationId "com.muicsenior.warehouse"
         minSdkVersion 15
-        targetSdkVersion 25
+        targetSdkVersion 26
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -27,7 +27,7 @@ dependencies {
 
     compile project(':tamemolibrary')
 
-
+    compile 'com.google.firebase:firebase-messaging:11.6.0'
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.github.nisrulz:qreader:2.0.0'
@@ -35,3 +35,4 @@ dependencies {
     compile 'com.android.support:design:22.2.1'
     testCompile 'junit:junit:4.12'
 }
+apply plugin: 'com.google.gms.google-services'
